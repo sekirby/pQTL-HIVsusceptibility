@@ -20,7 +20,8 @@ data$rs147944114 <- as.factor(data$rs147944114)
 data$CST <- as.factor(data$CST)
 data$CONTRA <- as.factor(data$CONTRA)
 data$SITE <- as.factor(data$SITE)
-data$TOTAL.BAC.N <- scale(as.numeric(data$TOTAL.BAC))
+data$TOTAL.BAC <- as.numeric(data$TOTAL.BAC)
+data$TOTAL.BAC.N <- scale(data$TOTAL.BAC)
 
 # filters
 N589 <- data %>% filter(CST != "NA")
