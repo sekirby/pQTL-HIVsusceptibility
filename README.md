@@ -1,14 +1,18 @@
 1. System requirements
+--------------------------------------------------
 This code has been written using R v4.3.0. 
 Packages used include: dplyr (v1.1.4), tidyr (v1.3.1), stats (v4.5.2), data.table (v1.17.8), glue (v1.8.0), purr (v1.1.0), mediation (v4.5.1), MASS (v7.3-65), sandwich (v3.1-1), lmtest (v0.9-40), AER (v1.2-15), broom (v1.0.11)
 
 2. Installation & use
+--------------------------------------------------
 Download this script and run through terminal or on RStudio.
 
 3. Demo
+--------------------------------------------------
 Instructions to run on data: Ensure "dummy_data.csv" is located in the same directory as the script.
 
 Expected output:
+--------------------------------------------------
 - Predictors of HIV acquisition - binomial logistic regressions
     Variable   COEFF STDERR CO_Lower CO_Upper     OR CI_Lower CI_Upper    p_value
    rs2920282  1.2372 0.6509  -0.0385   2.5128 3.4458   0.9622  12.3400 0.05732445
@@ -69,11 +73,8 @@ Expected output:
 10 A2ML1:TOTAL.BAC.N  0.0144    0.0343   -0.0516    0.0828 1.01      0.950             1.09 0.674    
 
 - Comprehensive summary table
-================================================================================ 
                     TWO-PHASE NEGATIVE BINOMIAL MODEL SUMMARY
-================================================================================ 
 THRESHOLD ANALYSIS:
--------------------------------------------------- 
 Estimated Threshold                :  107.555
 Bootstrap 95% CI                   :   91.177 to  118.940
 Bootstrap Iterations               :     1000 (100.0% successful)
@@ -81,23 +82,19 @@ Observations Below Threshold       :      191 (49.9%)
 Observations Above Threshold       :      191 (49.9%)
 
 STRUCTURAL BREAK TEST:
--------------------------------------------------- 
 Likelihood Ratio Statistic         :    5.830
 P-value                            :   0.0542
 Significance                       :     Yes*
 
-A2ML1 EFFECT COEFFICIENTS:
--------------------------------------------------- 
+A2ML1 EFFECT COEFFICIENTS: 
 Below Threshold (95% CI)           :   0.0288 [ -0.0682,   0.1258], p = 5.607219e-01
 Above Threshold (95% CI)           :  -0.0053 [ -0.1022,   0.0917], p = 9.148575e-01
 
 INCIDENCE RATE RATIOS (IRR):
--------------------------------------------------- 
 Below Threshold (95% CI)           :   1.0292 [  0.9341,   1.1340]
 Above Threshold (95% CI)           :   0.9947 [  0.9028,   1.0960]
 
 MODEL DIAGNOSTICS:
--------------------------------------------------- 
 Pooled Model AIC                   : 1302.730
 Below Threshold AIC                :  658.115
 Above Threshold AIC                :  656.784
@@ -106,10 +103,8 @@ Pooled Model Theta                 : 47570.925
 Below Threshold Theta              : 43411.004
 Above Threshold Theta              : 52913.421
 
-================================================================================ 
 Notes: *** p < 0.05, * p < 0.10
 IRR > 1: Positive association; IRR < 1: Negative association
-================================================================================
 
 - Bacterial load summary
   CST       n mean_bacterial_load median_bacterial_load min_bacterial_load max_bacterial_load Q1_bacterial_load Q3_bacterial_load
@@ -120,5 +115,5 @@ IRR > 1: Positive association; IRR < 1: Negative association
 4 D        55                162.                 101.                1.98              1031.              29.8              208.
 
 Expected run time for demo on a “normal” desktop computer: 8-10 minutes
-
+--------------------------------------------------
 
