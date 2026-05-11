@@ -1,119 +1,16 @@
-1. System requirements
---------------------------------------------------
-This code has been written using R v4.3.0. 
-Packages used include: dplyr (v1.1.4), tidyr (v1.3.1), stats (v4.5.2), data.table (v1.17.8), glue (v1.8.0), purr (v1.1.0), mediation (v4.5.1), MASS (v7.3-65), sandwich (v3.1-1), lmtest (v0.9-40), AER (v1.2-15), broom (v1.0.11)
+**1. System requirements**
 
-2. Installation & use
---------------------------------------------------
-Download this script and run through terminal or on RStudio.
+- This code has been written using R v4.3.0. 
+- Packages used include: dplyr (v1.1.4), tidyr (v1.3.1), stats (v4.5.2), data.table (v1.17.8), glue (v1.8.0), purr (v1.1.0), mediation (v4.5.1), MASS (v7.3-65), sandwich (v3.1-1), lmtest (v0.9-40), AER (v1.2-15), broom (v1.0.11)
 
-3. Demo
---------------------------------------------------
-Instructions to run on data: Ensure "dummy_data.csv" is located in the same directory as the script.
+**2. Installation & use**
 
-Expected output:
---------------------------------------------------
-- Predictors of HIV acquisition - binomial logistic regressions
-    Variable   COEFF STDERR CO_Lower CO_Upper     OR CI_Lower CI_Upper    p_value
-   rs2920282  1.2372 0.6509  -0.0385   2.5128 3.4458   0.9622  12.3400 0.05732445
-   rs8106317  0.8241 0.3690   0.1008   1.5474 2.2798   1.1060   4.6993 0.02554849
- rs147944114 -0.1051 0.5398  -1.1631   0.9528 0.9002   0.3125   2.5931 0.84556705
- rs143864957 -1.8487 1.0356  -3.8785   0.1811 0.1574   0.0207   1.1986 0.07424759
-       A2ML1 -0.3040 0.1830  -0.6627   0.0548 0.7379   0.5154   1.0563 0.09673944
-        PSCA -0.1807 0.1819  -0.5372   0.1757 0.8347   0.5844   1.1921 0.32031523
-       GSTO1 -0.1155 0.1750  -0.4585   0.2274 0.8909   0.6322   1.2554 0.50910046
-       CD177 -0.0848 0.1771  -0.4319   0.2623 0.9187   0.6493   1.2999 0.63210622
+- Download this script and run through terminal or on RStudio.
 
-- Predictors of inflammation - binomial logistic regressions
-    Variable  COEFF STDERR CO_Lower CO_Upper     OR CI_Lower CI_Upper   p_value
- rs143864957 0.4932 0.3028  -0.1002   1.0867 1.6376   0.9046   2.9646 0.1033266
-       A2ML1 0.0790 0.1071  -0.1309   0.2890 1.0823   0.8773   1.3351 0.4605774
+**3. Demo**
 
-- quartiles
-  Cytokine_clean     Q1 Median      Q3
-  <chr>           <dbl>  <dbl>   <dbl>
-1 IL-1α           72.4  157.    399.  
-2 IL-1β           13.4   45.2   173.  
-3 IL-6             3.3    7.67   21.7 
-4 IL-8           113.   386.   1023.  
-5 IP-10           41.9  310.    901.  
-6 MCP-1           10.1   18.9    54.5 
-7 MIP-1α           1.02   2.02    2.92
-8 MIP-1β           5.56  13.5    36.6 
-9 TNF-α            5.76  11.1    20.4 
+- Instructions to run on data: Ensure "dummy_data.csv" is located in the same directory as the script.
+- Expected output: "expected_output.txt"
+- Expected run time for demo on a “normal” desktop computer: 8-10 minutes
 
-- functional_relevance
- CST   inflammation_beta inflammation_se inflammation_CI_low inflammation_CI_high inflammation_p bacterial_beta bacterial_se bacterial_CI_low bacterial_CI_high bacterial_p     n
-  <fct>             <dbl>           <dbl>               <dbl>                <dbl>          <dbl>          <dbl>        <dbl>            <dbl>             <dbl>       <dbl> <int>
-1 A                0.156            0.297              -0.427                0.739          0.599        -0.297        0.195            -0.679            0.0843       0.133    55
-2 B                0.0924           0.158              -0.218                0.402          0.559        -0.0151       0.0740           -0.160            0.130        0.838   173
-3 C                0.0894           0.200              -0.302                0.481          0.655         0.0286       0.0749           -0.118            0.175        0.703   100
-4 D               -0.244            0.370              -0.969                0.482          0.511        -0.0111       0.171            -0.346            0.324        0.948    55
-
-- mediation_inflam_results
-  CST   reduced_acme_estimate reduced_acme_ci_lower reduced_acme_ci_upper reduced_acme_p reduced_ade_estimate reduced_ade_ci_lower
-  <chr>                 <dbl>                 <dbl>                 <dbl>          <dbl>                <dbl>                <dbl>
-1 A                   0.00760               -0.0330                0.0956          0.664               0.191                -0.173
-2 B                   0.00753               -0.0212                0.0462          0.635               0.0859               -0.138
-3 C                   0.00151               -0.0371                0.0442          0.97                0.239                -0.110
-4 D                  NA                     NA                    NA              NA                  NA                    NA    
-
-- tolerance_results
- term              estimate std.error conf.low conf.high   IRR IRR_conf.low IRR_conf.high     p.value
-   <chr>                <dbl>     <dbl>    <dbl>     <dbl> <dbl>        <dbl>         <dbl>       <dbl>
- 1 (Intercept)        0.921     0.181     0.566     1.28   2.51      1.76              3.58 0.000000368
- 2 A2ML1              0.0103    0.0348   -0.0579    0.0785 1.01      0.944             1.08 0.768      
- 3 TOTAL.BAC.N        0.0211    0.0338   -0.0474    0.0854 1.02      0.954             1.09 0.534      
- 4 C1                 0.303     4.93    -10.2       9.25   1.35      0.000038      10419.   0.951      
- 5 CONTRAD           -0.126     0.0972   -0.313     0.0683 0.882     0.731             1.07 0.196      
- 6 CONTRAN           -0.123     0.118    -0.353     0.108  0.884     0.703             1.11 0.295      
- 7 CONTRAO           -0.0556    0.191    -0.443     0.307  0.946     0.642             1.36 0.771      
- 8 SITEU              0.0974    0.0755   -0.0522    0.244  1.10      0.949             1.28 0.197      
- 9 AGE               -0.00119   0.00659  -0.0143    0.0116 0.999     0.986             1.01 0.857      
-10 A2ML1:TOTAL.BAC.N  0.0144    0.0343   -0.0516    0.0828 1.01      0.950             1.09 0.674    
-
-- Comprehensive summary table
-                    TWO-PHASE NEGATIVE BINOMIAL MODEL SUMMARY
-THRESHOLD ANALYSIS:
-Estimated Threshold                :  107.555
-Bootstrap 95% CI                   :   91.177 to  118.940
-Bootstrap Iterations               :     1000 (100.0% successful)
-Observations Below Threshold       :      191 (49.9%)
-Observations Above Threshold       :      191 (49.9%)
-
-STRUCTURAL BREAK TEST:
-Likelihood Ratio Statistic         :    5.830
-P-value                            :   0.0542
-Significance                       :     Yes*
-
-A2ML1 EFFECT COEFFICIENTS: 
-Below Threshold (95% CI)           :   0.0288 [ -0.0682,   0.1258], p = 5.607219e-01
-Above Threshold (95% CI)           :  -0.0053 [ -0.1022,   0.0917], p = 9.148575e-01
-
-INCIDENCE RATE RATIOS (IRR):
-Below Threshold (95% CI)           :   1.0292 [  0.9341,   1.1340]
-Above Threshold (95% CI)           :   0.9947 [  0.9028,   1.0960]
-
-MODEL DIAGNOSTICS:
-Pooled Model AIC                   : 1302.730
-Below Threshold AIC                :  658.115
-Above Threshold AIC                :  656.784
-Combined Separate Models AIC       : 1314.900
-Pooled Model Theta                 : 47570.925
-Below Threshold Theta              : 43411.004
-Above Threshold Theta              : 52913.421
-
-Notes: *** p < 0.05, * p < 0.10
-IRR > 1: Positive association; IRR < 1: Negative association
-
-- Bacterial load summary
-  CST       n mean_bacterial_load median_bacterial_load min_bacterial_load max_bacterial_load Q1_bacterial_load Q3_bacterial_load
-  <fct> <int>               <dbl>                 <dbl>              <dbl>              <dbl>             <dbl>             <dbl>
-1 A        55                206.                 132.                1.91              1167.              37.6              217.
-2 B       173                150.                  94.4               0.73              1265.              41.7              195.
-3 C       100                147.                 115.                0.99               737.              47.8              204.
-4 D        55                162.                 101.                1.98              1031.              29.8              208.
-
-Expected run time for demo on a “normal” desktop computer: 8-10 minutes
---------------------------------------------------
 
