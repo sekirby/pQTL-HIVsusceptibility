@@ -1,5 +1,5 @@
 ##### data & library loading #####
-packages <- c("dplyr", "tidyr", "stats", "data.table", "glue", "ggplot2", "purrr", "patchwork", "mediation")
+packages <- c("dplyr", "tidyr", "stats", "data.table", "glue", "purrr", "mediation")
 
 for (pkg in packages) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
