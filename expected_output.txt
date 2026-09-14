@@ -1,110 +1,512 @@
 Expected output:
-- Predictors of HIV acquisition - binomial logistic regressions
-    Variable   COEFF STDERR CO_Lower CO_Upper     OR CI_Lower CI_Upper    p_value
-   rs2920282  1.2372 0.6509  -0.0385   2.5128 3.4458   0.9622  12.3400 0.05732445
-   rs8106317  0.8241 0.3690   0.1008   1.5474 2.2798   1.1060   4.6993 0.02554849
- rs147944114 -0.1051 0.5398  -1.1631   0.9528 0.9002   0.3125   2.5931 0.84556705
- rs143864957 -1.8487 1.0356  -3.8785   0.1811 0.1574   0.0207   1.1986 0.07424759
-       A2ML1 -0.3040 0.1830  -0.6627   0.0548 0.7379   0.5154   1.0563 0.09673944
-        PSCA -0.1807 0.1819  -0.5372   0.1757 0.8347   0.5844   1.1921 0.32031523
-       GSTO1 -0.1155 0.1750  -0.4585   0.2274 0.8909   0.6322   1.2554 0.50910046
-       CD177 -0.0848 0.1771  -0.4319   0.2623 0.9187   0.6493   1.2999 0.63210622
+------------------------------------ STATISTICAL_ANALYSIS.R ---------------------------------------
+# Predictors of HIV acquisition - binomial logistic regressions
+   Group    Variable   COEFF STDERR CO_Lower CO_Upper     OR CI_Lower CI_Upper    p_value        FDR
+ Variant   rs2920282  1.2676 0.6492  -0.0048   2.5400 3.5523   0.9952  12.6803 0.05087388 0.07478363
+ Variant   rs8106317  0.7736 0.3629   0.0623   1.4849 2.1675   1.0643   4.4144 0.03303326 0.07478363
+ Variant rs147944114 -0.0641 0.5340  -1.1108   0.9826 0.9379   0.3293   2.6715 0.90450196 0.90450196
+ Variant rs143864957 -1.9707 1.0316  -3.9926   0.0512 0.1394   0.0185   1.0525 0.05608772 0.07478363
+ Protein       A2ML1 -0.2625 0.1838  -0.6228   0.0978 0.7691   0.5364   1.1028 0.15334751 0.61339005
+ Protein        PSCA -0.1096 0.1808  -0.4640   0.2447 0.8962   0.6288   1.2772 0.54421192 0.70036611
+ Protein       GSTO1 -0.0666 0.1730  -0.4057   0.2726 0.9356   0.6665   1.3133 0.70036611 0.70036611
+ Protein       CD177 -0.0819 0.1767  -0.4282   0.2644 0.9214   0.6517   1.3026 0.64291387 0.70036611
 
-- Predictors of inflammation - binomial logistic regressions
+# does HIV risk differ between study arm?
+Call:
+glm(formula = HIV ~ rs143864957 * studyArm + C1 + AGE + as.factor(CONTRA) + 
+    CST + SITE + condom_coded + SEX_7DAYS + HSV_E, family = binomial, 
+    data = N589)
+
+Coefficients:
+                         Estimate Std. Error z value Pr(>|z|)  
+(Intercept)            -1.762e+01  4.606e+03  -0.004   0.9969  
+rs1438649571           -1.374e+00  1.064e+00  -1.291   0.1966  
+studyArm1              -1.442e-01  3.599e-01  -0.401   0.6887  
+C1                     -5.590e+01  5.979e+01  -0.935   0.3498  
+AGE                     4.131e-03  3.382e-02   0.122   0.9028  
+as.factor(CONTRA)D     -9.172e-01  4.356e-01  -2.106   0.0352 *
+as.factor(CONTRA)N     -1.145e+00  5.950e-01  -1.925   0.0543 .
+as.factor(CONTRA)O      3.380e-02  7.756e-01   0.044   0.9652  
+CSTB                   -3.299e-01  5.232e-01  -0.630   0.5284  
+CSTC                   -3.370e-02  5.519e-01  -0.061   0.9513  
+CSTD                   -7.132e-01  6.924e-01  -1.030   0.3030  
+SITEU                   5.407e-01  3.756e-01   1.439   0.1500  
+condom_coded1           9.588e-02  3.552e-01   0.270   0.7872  
+SEX_7DAYS              -3.303e-02  7.004e-02  -0.472   0.6372  
+HSV_ENegative           1.625e+01  4.606e+03   0.004   0.9972  
+HSV_EPositive           1.617e+01  4.606e+03   0.004   0.9972  
+rs1438649571:studyArm1 -1.502e+01  1.236e+03  -0.012   0.9903  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 250.36  on 395  degrees of freedom
+Residual deviance: 229.84  on 379  degrees of freedom
+AIC: 263.84
+
+Number of Fisher Scoring iterations: 17
+
+# Predictors of inflammation - binomial logistic regressions
     Variable  COEFF STDERR CO_Lower CO_Upper     OR CI_Lower CI_Upper   p_value
- rs143864957 0.4932 0.3028  -0.1002   1.0867 1.6376   0.9046   2.9646 0.1033266
-       A2ML1 0.0790 0.1071  -0.1309   0.2890 1.0823   0.8773   1.3351 0.4605774
+ rs143864957 0.2737 0.2943  -0.3032   0.8505 1.3148   0.7384   2.3409 0.3524761
+       A2ML1 0.0917 0.1044  -0.1129   0.2963 1.0960   0.8932   1.3448 0.3797000
 
-- quartiles
-  Cytokine_clean     Q1 Median      Q3
-  <chr>           <dbl>  <dbl>   <dbl>
-1 IL-1α           72.4  157.    399.  
-2 IL-1β           13.4   45.2   173.  
-3 IL-6             3.3    7.67   21.7 
-4 IL-8           113.   386.   1023.  
-5 IP-10           41.9  310.    901.  
-6 MCP-1           10.1   18.9    54.5 
-7 MIP-1α           1.02   2.02    2.92
-8 MIP-1β           5.56  13.5    36.6 
-9 TNF-α            5.76  11.1    20.4 
+# cytokine quartiles
+  Cytokine     Q1 Median      Q3
+  <chr>     <dbl>  <dbl>   <dbl>
+1 IL_1A     77.5  158.    398.  
+2 IL_1B     13.5   46.2   173.  
+3 IL_6       3.3    7.64   22.2 
+4 IL_8     110.   376.   1026.  
+5 IP_10     42.2  323.    916.  
+6 MCP_1      9.80  18.7    54.5 
+7 MIP_1A     1.1    2.05    2.94
+8 MIP_1B     5.59  13.5    36.5 
+9 TNF_A      5.72  11.0    20.2 
 
-- functional_relevance
- CST   inflammation_beta inflammation_se inflammation_CI_low inflammation_CI_high inflammation_p bacterial_beta bacterial_se bacterial_CI_low bacterial_CI_high bacterial_p     n
-  <fct>             <dbl>           <dbl>               <dbl>                <dbl>          <dbl>          <dbl>        <dbl>            <dbl>             <dbl>       <dbl> <int>
-1 A                0.156            0.297              -0.427                0.739          0.599        -0.297        0.195            -0.679            0.0843       0.133    55
-2 B                0.0924           0.158              -0.218                0.402          0.559        -0.0151       0.0740           -0.160            0.130        0.838   173
-3 C                0.0894           0.200              -0.302                0.481          0.655         0.0286       0.0749           -0.118            0.175        0.703   100
-4 D               -0.244            0.370              -0.969                0.482          0.511        -0.0111       0.171            -0.346            0.324        0.948    55
+# CST interaction
+Call:
+lm(formula = A2ML1 ~ rs143864957 * CST + C1 + AGE + as.factor(CONTRA) + 
+    SITE, data = N589)
 
-- mediation_inflam_results
-  CST   reduced_acme_estimate reduced_acme_ci_lower reduced_acme_ci_upper reduced_acme_p reduced_ade_estimate reduced_ade_ci_lower
-  <chr>                 <dbl>                 <dbl>                 <dbl>          <dbl>                <dbl>                <dbl>
-1 A                   0.00760               -0.0330                0.0956          0.664               0.191                -0.173
-2 B                   0.00753               -0.0212                0.0462          0.635               0.0859               -0.138
-3 C                   0.00151               -0.0371                0.0442          0.97                0.239                -0.110
-4 D                  NA                     NA                    NA              NA                  NA                    NA    
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.10756 -0.66936 -0.01394  0.61245  2.91862 
 
-- tolerance_results
- term              estimate std.error conf.low conf.high   IRR IRR_conf.low IRR_conf.high     p.value
-   <chr>                <dbl>     <dbl>    <dbl>     <dbl> <dbl>        <dbl>         <dbl>       <dbl>
- 1 (Intercept)        0.921     0.181     0.566     1.28   2.51      1.76              3.58 0.000000368
- 2 A2ML1              0.0103    0.0348   -0.0579    0.0785 1.01      0.944             1.08 0.768      
- 3 TOTAL.BAC.N        0.0211    0.0338   -0.0474    0.0854 1.02      0.954             1.09 0.534      
- 4 C1                 0.303     4.93    -10.2       9.25   1.35      0.000038      10419.   0.951      
- 5 CONTRAD           -0.126     0.0972   -0.313     0.0683 0.882     0.731             1.07 0.196      
- 6 CONTRAN           -0.123     0.118    -0.353     0.108  0.884     0.703             1.11 0.295      
- 7 CONTRAO           -0.0556    0.191    -0.443     0.307  0.946     0.642             1.36 0.771      
- 8 SITEU              0.0974    0.0755   -0.0522    0.244  1.10      0.949             1.28 0.197      
- 9 AGE               -0.00119   0.00659  -0.0143    0.0116 0.999     0.986             1.01 0.857      
-10 A2ML1:TOTAL.BAC.N  0.0144    0.0343   -0.0516    0.0828 1.01      0.950             1.09 0.674    
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)
+(Intercept)         0.018529   0.307316   0.060    0.952
+rs1438649571        0.674997   0.415100   1.626    0.105
+CSTB                0.205447   0.172411   1.192    0.234
+CSTC                0.193387   0.184226   1.050    0.295
+CSTD                0.122455   0.201674   0.607    0.544
+C1                 -3.771802   7.498022  -0.503    0.615
+AGE                -0.002667   0.009840  -0.271    0.787
+as.factor(CONTRA)D -0.221089   0.151504  -1.459    0.145
+as.factor(CONTRA)N -0.118963   0.180044  -0.661    0.509
+as.factor(CONTRA)O -0.352877   0.298281  -1.183    0.238
+SITEU               0.079232   0.115867   0.684    0.495
+rs1438649571:CSTB  -0.555133   0.466309  -1.190    0.235
+rs1438649571:CSTC  -0.805169   0.524970  -1.534    0.126
+rs1438649571:CSTD  -0.348180   0.551616  -0.631    0.528
 
-- Comprehensive summary table
-================================================================================ 
-                    TWO-PHASE NEGATIVE BINOMIAL MODEL SUMMARY
-================================================================================ 
-THRESHOLD ANALYSIS:
--------------------------------------------------- 
-Estimated Threshold                :  107.555
-Bootstrap 95% CI                   :   91.177 to  118.940
-Bootstrap Iterations               :     1000 (100.0% successful)
-Observations Below Threshold       :      191 (49.9%)
-Observations Above Threshold       :      191 (49.9%)
+Residual standard error: 1.008 on 382 degrees of freedom
+Multiple R-squared:  0.02101,	Adjusted R-squared:  -0.0123 
+F-statistic: 0.6307 on 13 and 382 DF,  p-value: 0.8284
 
-STRUCTURAL BREAK TEST:
--------------------------------------------------- 
-Likelihood Ratio Statistic         :    5.830
-P-value                            :   0.0542
-Significance                       :     Yes*
+> anova(m0, mCST)
+Analysis of Variance Table
 
-A2ML1 EFFECT COEFFICIENTS:
--------------------------------------------------- 
-Below Threshold (95% CI)           :   0.0288 [ -0.0682,   0.1258], p = 5.607219e-01
-Above Threshold (95% CI)           :  -0.0053 [ -0.1022,   0.0917], p = 9.148575e-01
+Model 1: A2ML1 ~ rs143864957 + CST + C1 + AGE + as.factor(CONTRA) + SITE
+Model 2: A2ML1 ~ rs143864957 * CST + C1 + AGE + as.factor(CONTRA) + SITE
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    385 390.64                           
+2    382 388.00  3    2.6348 0.8647 0.4595
 
-INCIDENCE RATE RATIOS (IRR):
--------------------------------------------------- 
-Below Threshold (95% CI)           :   1.0292 [  0.9341,   1.1340]
-Above Threshold (95% CI)           :   0.9947 [  0.9028,   1.0960]
+# contraceptive interaction
+Call:
+lm(formula = A2ML1 ~ rs143864957 * as.factor(CONTRA) + CST + 
+    C1 + AGE + SITE, data = N589)
 
-MODEL DIAGNOSTICS:
--------------------------------------------------- 
-Pooled Model AIC                   : 1302.730
-Below Threshold AIC                :  658.115
-Above Threshold AIC                :  656.784
-Combined Separate Models AIC       : 1314.900
-Pooled Model Theta                 : 47570.925
-Below Threshold Theta              : 43411.004
-Above Threshold Theta              : 52913.421
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.11994 -0.66434 -0.01728  0.61881  2.94629 
 
-================================================================================ 
-Notes: *** p < 0.05, * p < 0.10
-IRR > 1: Positive association; IRR < 1: Negative association
-================================================================================
+Coefficients:
+                                 Estimate Std. Error t value Pr(>|t|)
+(Intercept)                      0.015473   0.308919   0.050    0.960
+rs1438649571                     0.620580   0.437964   1.417    0.157
+as.factor(CONTRA)D              -0.173129   0.160954  -1.076    0.283
+as.factor(CONTRA)N              -0.082370   0.190948  -0.431    0.666
+as.factor(CONTRA)O              -0.224887   0.326896  -0.688    0.492
+CSTB                             0.128909   0.161221   0.800    0.424
+CSTC                             0.091910   0.172478   0.533    0.594
+CSTD                             0.065395   0.188671   0.347    0.729
+C1                              -2.260769   7.454855  -0.303    0.762
+AGE                             -0.001249   0.009839  -0.127    0.899
+SITEU                            0.072474   0.115987   0.625    0.532
+rs1438649571:as.factor(CONTRA)D -0.496068   0.473370  -1.048    0.295
+rs1438649571:as.factor(CONTRA)N -0.438385   0.560203  -0.783    0.434
+rs1438649571:as.factor(CONTRA)O -0.844794   0.790214  -1.069    0.286
 
-- Bacterial load summary
-  CST       n mean_bacterial_load median_bacterial_load min_bacterial_load max_bacterial_load Q1_bacterial_load Q3_bacterial_load
-  <fct> <int>               <dbl>                 <dbl>              <dbl>              <dbl>             <dbl>             <dbl>
-1 A        55                206.                 132.                1.91              1167.              37.6              217.
-2 B       173                150.                  94.4               0.73              1265.              41.7              195.
-3 C       100                147.                 115.                0.99               737.              47.8              204.
-4 D        55                162.                 101.                1.98              1031.              29.8              208.
+Residual standard error: 1.009 on 382 degrees of freedom
+Multiple R-squared:  0.01818,	Adjusted R-squared:  -0.01524 
+F-statistic: 0.544 on 13 and 382 DF,  p-value: 0.8965
+
+> anova(m0, mCONTRA)
+Analysis of Variance Table
+
+Model 1: A2ML1 ~ rs143864957 + CST + C1 + AGE + as.factor(CONTRA) + SITE
+Model 2: A2ML1 ~ rs143864957 * as.factor(CONTRA) + CST + C1 + AGE + SITE
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    385 390.64                           
+2    382 389.13  3    1.5111 0.4945 0.6863
+
+# site interaction
+Call:
+lm(formula = A2ML1 ~ rs143864957 * SITE + CST + C1 + AGE + as.factor(CONTRA), 
+    data = N589)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.10497 -0.67193 -0.02163  0.62216  2.95854 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)
+(Intercept)         0.074615   0.304200   0.245    0.806
+rs1438649571        0.198527   0.174008   1.141    0.255
+SITEU               0.089094   0.125309   0.711    0.478
+CSTB                0.133968   0.160366   0.835    0.404
+CSTC                0.094156   0.172271   0.547    0.585
+CSTD                0.080128   0.187899   0.426    0.670
+C1                 -2.304128   7.436650  -0.310    0.757
+AGE                -0.002053   0.009795  -0.210    0.834
+as.factor(CONTRA)D -0.228878   0.151286  -1.513    0.131
+as.factor(CONTRA)N -0.131005   0.179000  -0.732    0.465
+as.factor(CONTRA)O -0.353300   0.296135  -1.193    0.234
+rs1438649571:SITEU -0.088020   0.319409  -0.276    0.783
+
+Residual standard error: 1.009 on 384 degrees of freedom
+Multiple R-squared:  0.01456,	Adjusted R-squared:  -0.01367 
+F-statistic: 0.5158 on 11 and 384 DF,  p-value: 0.8928
+
+> anova(m0, mSITE)
+Analysis of Variance Table
+
+Model 1: A2ML1 ~ rs143864957 + CST + C1 + AGE + as.factor(CONTRA) + SITE
+Model 2: A2ML1 ~ rs143864957 * SITE + CST + C1 + AGE + as.factor(CONTRA)
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    385 390.64                           
+2    384 390.56  1  0.077236 0.0759  0.783
+
+# A2ML1 ~ proteome covariates
+> pvals
+      CST    CONTRA      SITE 
+0.8547268 0.4380384 0.4905664 
+> p.adjust(pvals, method = "BH")
+      CST    CONTRA      SITE 
+0.8547268 0.7358496 0.7358496 
+
+# Post hoc pairwise CST comparisons
+Call:
+lm(formula = A2ML1 ~ CST + as.factor(CONTRA) + SITE + C1 + AGE, 
+    data = N589)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.13606 -0.68365 -0.01825  0.61329  2.93667 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)
+(Intercept)         0.098263   0.303315   0.324    0.746
+CSTB                0.136971   0.160011   0.856    0.393
+CSTC                0.087456   0.172063   0.508    0.612
+CSTD                0.078692   0.187670   0.419    0.675
+as.factor(CONTRA)D -0.221315   0.151052  -1.465    0.144
+as.factor(CONTRA)N -0.124383   0.178682  -0.696    0.487
+as.factor(CONTRA)O -0.334677   0.295531  -1.132    0.258
+SITEU               0.079695   0.115489   0.690    0.491
+C1                 -2.231139   7.431290  -0.300    0.764
+AGE                -0.002166   0.009784  -0.221    0.825
+
+Residual standard error: 1.008 on 386 degrees of freedom
+Multiple R-squared:  0.01079,	Adjusted R-squared:  -0.01228 
+F-statistic: 0.4678 on 9 and 386 DF,  p-value: 0.896
+
+> emm <- emmeans(m.full, ~ CST)
+> unad <- pairs(emm, adjust = 'none')
+> unad_df <- as.data.frame(unad)
+> unad_df[, c("contrast", "estimate", "p.value")]
+  contrast     estimate   p.value
+1    A - B -0.136970679 0.3925243
+2    A - C -0.087455986 0.6115478
+3    A - D -0.078691897 0.6752231
+4    B - C  0.049514692 0.6954639
+5    B - D  0.058278781 0.6911496
+6    C - D  0.008764089 0.9565672
+> pairs(emm, adjust = "none") |> confint()
+ contrast estimate    SE  df lower.CL upper.CL
+ A - B    -0.13697 0.160 386   -0.452    0.178
+ A - C    -0.08746 0.172 386   -0.426    0.251
+ A - D    -0.07869 0.188 386   -0.448    0.290
+ B - C     0.04951 0.126 386   -0.199    0.298
+ B - D     0.05828 0.147 386   -0.230    0.346
+ C - D     0.00876 0.161 386   -0.307    0.325
+
+Results are averaged over the levels of: CONTRA, SITE 
+Confidence level used: 0.95 
+
+> adj <- pairs(emm, adjust = 'BH')
+> adj_df <- as.data.frame(adj)
+> adj_df[, c("contrast", "estimate", "p.value")]
+  contrast     estimate   p.value
+1    A - B -0.136970679 0.8345567
+2    A - C -0.087455986 0.8345567
+3    A - D -0.078691897 0.8345567
+4    B - C  0.049514692 0.8345567
+5    B - D  0.058278781 0.8345567
+6    C - D  0.008764089 0.9565672
+
+# median A2ML1 by CST
+  CST        A2ML1
+1   A -0.007151823
+2   B  0.033976588
+3   C  0.039350129
+4   D -0.130906321
+
+# A2ML1 x Bacterial spectral count
+Call:
+lm(formula = A2ML1 ~ TOTAL.BAC + C1 + AGE + as.factor(CONTRA) + 
+    SITE, data = N589)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.11368 -0.69988  0.00173  0.62677  2.95612 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)
+(Intercept)         0.2300049  0.2721012   0.845    0.398
+TOTAL.BAC          -0.0003044  0.0002773  -1.098    0.273
+C1                 -3.0707294  7.3515289  -0.418    0.676
+AGE                -0.0018547  0.0097638  -0.190    0.849
+as.factor(CONTRA)D -0.2223559  0.1504287  -1.478    0.140
+as.factor(CONTRA)N -0.1139115  0.1782343  -0.639    0.523
+as.factor(CONTRA)O -0.2880379  0.2961772  -0.973    0.331
+SITEU               0.0845062  0.1142884   0.739    0.460
+
+Residual standard error: 1.005 on 388 degrees of freedom
+Multiple R-squared:  0.01187,	Adjusted R-squared:  -0.005962 
+F-statistic: 0.6656 on 7 and 388 DF,  p-value: 0.7012
+
+> confint(mTOTALBAC)
+                           2.5 %       97.5 %
+(Intercept)        -3.049724e-01 7.649822e-01
+TOTAL.BAC          -8.494993e-04 2.407284e-04
+C1                 -1.752455e+01 1.138309e+01
+AGE                -2.105126e-02 1.734182e-02
+as.factor(CONTRA)D -5.181134e-01 7.340150e-02
+as.factor(CONTRA)N -4.643374e-01 2.365144e-01
+as.factor(CONTRA)O -8.703510e-01 2.942752e-01
+SITEU              -1.401959e-01 3.092082e-01
+
+# colinearity
+	Spearman's rank correlation rho
+
+data:  N589$TOTAL.BAC and N589$hcount
+S = 10587525, p-value = 0.6486
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+        rho 
+-0.02297003 
+
+# VIF
+TOTAL.BAC    hcount 
+ 1.001172  1.001172 
+
+# A2ML1 ~ CST + TOTAL.BAC independence
+Call:
+lm(formula = A2ML1 ~ CST + TOTAL.BAC + SITE + as.factor(CONTRA) + 
+    C1 + AGE, data = N589)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.1560 -0.6922 -0.0038  0.6213  2.9615 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)
+(Intercept)         0.1292233  0.3046555   0.424    0.672
+CSTB                0.1312555  0.1600737   0.820    0.413
+CSTC                0.0862422  0.1720372   0.501    0.616
+CSTD                0.0744705  0.1876799   0.397    0.692
+TOTAL.BAC          -0.0002962  0.0002783  -1.064    0.288
+SITEU               0.0786534  0.1154733   0.681    0.496
+as.factor(CONTRA)D -0.2218797  0.1510272  -1.469    0.143
+as.factor(CONTRA)N -0.1130128  0.1789709  -0.631    0.528
+as.factor(CONTRA)O -0.2887773  0.2986121  -0.967    0.334
+C1                 -2.6173394  7.4388754  -0.352    0.725
+AGE                -0.0015130  0.0098016  -0.154    0.877
+
+Residual standard error: 1.008 on 385 degrees of freedom
+Multiple R-squared:  0.01369,	Adjusted R-squared:  -0.01193 
+F-statistic: 0.5344 on 10 and 385 DF,  p-value: 0.8657
+
+> confint(mINDEP)
+                           2.5 %       97.5 %
+(Intercept)        -4.697735e-01 7.282200e-01
+CSTB               -1.834725e-01 4.459835e-01
+CSTC               -2.520078e-01 4.244921e-01
+CSTD               -2.945354e-01 4.434764e-01
+TOTAL.BAC          -8.433859e-04 2.510607e-04
+SITEU              -1.483838e-01 3.056905e-01
+as.factor(CONTRA)D -5.188210e-01 7.506163e-02
+as.factor(CONTRA)N -4.648956e-01 2.388699e-01
+as.factor(CONTRA)O -8.758919e-01 2.983373e-01
+C1                 -1.724325e+01 1.200857e+01
+AGE                -2.078444e-02 1.775834e-02
+
+> anova(m.cst, m.cst.bac)
+Analysis of Variance Table
+
+Model 1: A2ML1 ~ CST + C1 + AGE + as.factor(CONTRA) + SITE
+Model 2: A2ML1 ~ CST + TOTAL.BAC + C1 + AGE + as.factor(CONTRA) + SITE
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    386 392.05                           
+2    385 390.90  1    1.1497 1.1323  0.288
+
+# does cst add information beyond bacterial load
+> anova(m.bac, m.cst.bac)
+Analysis of Variance Table
+
+Model 1: A2ML1 ~ TOTAL.BAC + C1 + AGE + as.factor(CONTRA) + SITE
+Model 2: A2ML1 ~ CST + TOTAL.BAC + C1 + AGE + as.factor(CONTRA) + SITE
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    388 391.63                           
+2    385 390.90  3   0.72308 0.2374 0.8703
+
+# A2ML1 ~ CST + TOTAL.BAC + inflammation
+> summary(m0)$coefficients
+                        Estimate  Std. Error    t value  Pr(>|t|)
+(Intercept)         0.1292232878 0.304655462  0.4241621 0.6716845
+CSTB                0.1312555170 0.160073653  0.8199695 0.4127408
+CSTC                0.0862421708 0.172037158  0.5012997 0.6164467
+CSTD                0.0744704838 0.187679908  0.3967952 0.6917384
+TOTAL.BAC          -0.0002961626 0.000278323 -1.0640967 0.2879518
+SITEU               0.0786533610 0.115473258  0.6811392 0.4961929
+as.factor(CONTRA)D -0.2218796689 0.151027176 -1.4691374 0.1426121
+as.factor(CONTRA)N -0.1130128280 0.178970927 -0.6314591 0.5281151
+as.factor(CONTRA)O -0.2887773010 0.298612104 -0.9670650 0.3341186
+C1                 -2.6173394263 7.438875389 -0.3518461 0.7251462
+AGE                -0.0015130472 0.009801613 -0.1543672 0.8774011
+> summary(m1)$coefficients
+                        Estimate   Std. Error    t value  Pr(>|t|)
+(Intercept)         0.0826701810 0.3200200475  0.2583281 0.7962921
+CSTB                0.1317665548 0.1602374524  0.8223206 0.4114048
+CSTC                0.0839690643 0.1722745360  0.4874143 0.6262429
+CSTD                0.0709024986 0.1880148942  0.3771111 0.7062994
+TOTAL.BAC          -0.0002992693 0.0002786769 -1.0738935 0.2835448
+inflammation_score  0.0188720065 0.0393286469  0.4798539 0.6316044
+SITEU               0.0750296663 0.1158352857  0.6477272 0.5175485
+as.factor(CONTRA)D -0.2175639796 0.1514456664 -1.4365811 0.1516513
+as.factor(CONTRA)N -0.1096875564 0.1792840819 -0.6118087 0.5410264
+as.factor(CONTRA)O -0.2870937258 0.2989316542 -0.9603992 0.3374587
+C1                 -2.6269289194 7.4463497401 -0.3527808 0.7244464
+AGE                -0.0013880181 0.0098148856 -0.1414197 0.8876126
+> 
+> confint(m0)
+                           2.5 %       97.5 %
+(Intercept)        -4.697735e-01 7.282200e-01
+CSTB               -1.834725e-01 4.459835e-01
+CSTC               -2.520078e-01 4.244921e-01
+CSTD               -2.945354e-01 4.434764e-01
+TOTAL.BAC          -8.433859e-04 2.510607e-04
+SITEU              -1.483838e-01 3.056905e-01
+as.factor(CONTRA)D -5.188210e-01 7.506163e-02
+as.factor(CONTRA)N -4.648956e-01 2.388699e-01
+as.factor(CONTRA)O -8.758919e-01 2.983373e-01
+C1                 -1.724325e+01 1.200857e+01
+AGE                -2.078444e-02 1.775834e-02
+> confint(m1)
+                           2.5 %       97.5 %
+(Intercept)        -5.465407e-01 7.118811e-01
+CSTB               -1.832861e-01 4.468192e-01
+CSTC               -2.547504e-01 4.226885e-01
+CSTD               -2.987650e-01 4.405700e-01
+TOTAL.BAC          -8.471928e-04 2.486543e-04
+inflammation_score -5.845444e-02 9.619846e-02
+SITEU              -1.527212e-01 3.027805e-01
+as.factor(CONTRA)D -5.153305e-01 8.020258e-02
+as.factor(CONTRA)N -4.621889e-01 2.428138e-01
+as.factor(CONTRA)O -8.748415e-01 3.006540e-01
+C1                 -1.726765e+01 1.201379e+01
+AGE                -2.068566e-02 1.790963e-02
+
+# Percent attenuation after adjustment
+> cst_attenuation
+   CSTD 
+4.79114 
+> bac_attenuation
+TOTAL.BAC 
+ -1.04898 
+
+# A2ML1 ~ inflammation * TOTAL.BAC
+ term              estimate std.error statistic p.value conf.low conf.high
+  <chr>                <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
+1 A2ML1                 1.01    0.0338     0.408   0.683    0.949      1.08
+2 TOTAL.BAC.N           1.02    0.0338     0.462   0.644    0.949      1.08
+3 A2ML1:TOTAL.BAC.N     1.01    0.0341     0.269   0.788    0.945      1.08
+
+# exploratory breakpoint analysis
+Threshold: 33.39 
+95% CI: 23.593 - 278.982 
+Bootstrap p-value: 0.799 
+
+------------------------------------ LONGITUDINAL_ANALYSIS.R ---------------------------------------
+Call:
+lm(formula = inflammation_followup ~ A2ML1_base + inflammation_baseline + 
+    days_followup + C1 + AGE + as.factor(SITE) + as.factor(CST) + 
+    as.factor(CONTRA), data = data_wide_inflammation)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.6368 -1.2425 -0.1635  0.9115  5.5610 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(>|t|)   
+(Intercept)            1.6311354  0.6234577   2.616  0.00924 **
+A2ML1_base             0.0314401  0.0867794   0.362  0.71733   
+inflammation_baseline  0.0312771  0.0485612   0.644  0.51991   
+days_followup         -0.0002445  0.0006497  -0.376  0.70687   
+C1                     6.0267089 12.6198103   0.478  0.63324   
+AGE                    0.0067070  0.0166695   0.402  0.68765   
+as.factor(SITE)U      -0.1396030  0.1967273  -0.710  0.47837   
+as.factor(CST)B        0.3302796  0.2722524   1.213  0.22583   
+as.factor(CST)C        0.1873034  0.2929666   0.639  0.52299   
+as.factor(CST)D        0.5138626  0.3175816   1.618  0.10648   
+as.factor(CONTRA)D     0.2165424  0.2564842   0.844  0.39905   
+as.factor(CONTRA)N     0.1452840  0.3028723   0.480  0.63172   
+as.factor(CONTRA)O    -0.1875125  0.5015284  -0.374  0.70870   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.704 on 381 degrees of freedom
+Multiple R-squared:  0.01613,	Adjusted R-squared:  -0.01486 
+F-statistic: 0.5204 on 12 and 381 DF,  p-value: 0.9016
+
+> tidy(model_inflammation)
+# A tibble: 13 × 5
+   term                   estimate std.error statistic p.value
+   <chr>                     <dbl>     <dbl>     <dbl>   <dbl>
+ 1 (Intercept)            1.63      0.623        2.62  0.00924
+ 2 A2ML1_base             0.0314    0.0868       0.362 0.717  
+ 3 inflammation_baseline  0.0313    0.0486       0.644 0.520  
+ 4 days_followup         -0.000245  0.000650    -0.376 0.707  
+ 5 C1                     6.03     12.6          0.478 0.633  
+ 6 AGE                    0.00671   0.0167       0.402 0.688  
+ 7 as.factor(SITE)U      -0.140     0.197       -0.710 0.478  
+ 8 as.factor(CST)B        0.330     0.272        1.21  0.226  
+ 9 as.factor(CST)C        0.187     0.293        0.639 0.523  
+10 as.factor(CST)D        0.514     0.318        1.62  0.106  
+11 as.factor(CONTRA)D     0.217     0.256        0.844 0.399  
+12 as.factor(CONTRA)N     0.145     0.303        0.480 0.632  
+13 as.factor(CONTRA)O    -0.188     0.502       -0.374 0.709  
+
+
+> tidy(model_inflammation, conf.int = TRUE) %>%
++   select(term, estimate, conf.low, conf.high, p.value)
+# A tibble: 13 × 5
+   term                   estimate  conf.low conf.high p.value
+   <chr>                     <dbl>     <dbl>     <dbl>   <dbl>
+ 1 (Intercept)            1.63       0.405     2.86    0.00924
+ 2 A2ML1_base             0.0314    -0.139     0.202   0.717  
+ 3 inflammation_baseline  0.0313    -0.0642    0.127   0.520  
+ 4 days_followup         -0.000245  -0.00152   0.00103 0.707  
+ 5 C1                     6.03     -18.8      30.8     0.633  
+ 6 AGE                    0.00671   -0.0261    0.0395  0.688  
+ 7 as.factor(SITE)U      -0.140     -0.526     0.247   0.478  
+ 8 as.factor(CST)B        0.330     -0.205     0.866   0.226  
+ 9 as.factor(CST)C        0.187     -0.389     0.763   0.523  
+10 as.factor(CST)D        0.514     -0.111     1.14    0.106  
+11 as.factor(CONTRA)D     0.217     -0.288     0.721   0.399  
+12 as.factor(CONTRA)N     0.145     -0.450     0.741   0.632  
+13 as.factor(CONTRA)O    -0.188     -1.17      0.799   0.709  
