@@ -527,6 +527,58 @@ simulate_null_nb <- function(data, null_fit) {
   sim_data
 }
 
+# nonparametric bootstrap CI
+bootstrap_threshold_ci <- function(
+    data,
+    B = 1000,
+    seed = 123
+) {
+  
+  set.seed(seed)
+  
+  threshold_boot <- rep(NA, B)
+  
+  for (b in seq_len(B)) {
+    
+    boot_idx <- sample(
+      seq_len(nrow(data)),
+      size = nrow(data),
+      replace = TRUE
+    )
+    
+    boot_data <- data[boot_idx, ]
+    
+    boot_result <- tryCatch(
+      find_best_threshold(boot_data),
+      error = function(e) NULL
+    )
+    
+    if (!is.null(boot_result)) {
+      
+      threshold_boot[b] <-
+        boot_result$threshold
+      
+    }
+  }
+  
+  threshold_boot <- na.omit(
+    threshold_boot
+  )
+  
+  threshold_ci <- quantile(
+    threshold_boot,
+    c(0.025, 0.975)
+  )
+  
+  list(
+    threshold_boot =
+      threshold_boot,
+    
+    threshold_ci =
+      threshold_ci
+  )
+}
+
 # bootstrap entire threshold search
 supLR_bootstrap <- function(
     data,
@@ -570,15 +622,8 @@ supLR_bootstrap <- function(
   
   LR_boot <- na.omit(LR_boot)
   
-  threshold_boot <- na.omit(threshold_boot)
-  
   p_value <- mean(
     LR_boot >= observed_LR
-  )
-  
-  threshold_ci <- quantile(
-    threshold_boot,
-    c(0.025, 0.975)
   )
   
   list(
@@ -590,12 +635,6 @@ supLR_bootstrap <- function(
     
     p_value =
       p_value,
-    
-    threshold_ci =
-      threshold_ci,
-    
-    threshold_boot =
-      threshold_boot,
     
     LR_boot =
       LR_boot,
@@ -612,26 +651,42 @@ cp_test <- supLR_bootstrap(
   B = 1000
 )
 
-discovered_threshold <-
-  cp_test$observed_threshold
+threshold_results <-
+  bootstrap_threshold_ci(
+    N580,
+    B = 1000
+  )
+
 
 ## reporting
 cat(
   "Threshold:",
-  round(cp_test$observed_threshold, 3),
+  round(
+    cp_test$observed_threshold,
+    3
+  ),
   "\n"
 )
 
 cat(
   "95% CI:",
-  round(cp_test$threshold_ci[1], 3),
+  round(
+    threshold_results$threshold_ci[1],
+    3
+  ),
   "-",
-  round(cp_test$threshold_ci[2], 3),
+  round(
+    threshold_results$threshold_ci[2],
+    3
+  ),
   "\n"
 )
 
 cat(
   "Bootstrap p-value:",
-  signif(cp_test$p_value, 3),
+  signif(
+    cp_test$p_value,
+    3
+  ),
   "\n"
 )
