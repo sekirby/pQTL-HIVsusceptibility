@@ -11,6 +11,6 @@
 
 - Instructions to run on data: Ensure "dummy_data.csv" and "dummy_long_data.csv" are located in the same directory as their respective scripts.
 - Expected output for both statistical and longitudinal analyses: "expected_output.txt"
-- Expected run time for demo on a “normal” desktop computer: 30-45 minutes
+- Expected run time for demo on a “normal” desktop computer: 60-90 minutes
 
 
